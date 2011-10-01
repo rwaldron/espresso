@@ -1,0 +1,22 @@
+#!/bin/sh
+
+case `uname` in
+		CYGWIN*)
+			OS="Windows"
+		;;
+		*)
+			OS=Unix
+esac
+
+if [ $OS = "Windows" ]; then
+	test "$JSC_HOME" = "" && {
+	JSC_HOME=`dirname $0`
+    	JSC_HOME=`cygpath -m $JSC_HOME`
+	}
+elif [ $OS = "Unix" ]; then
+	test "$JSC_HOME" = "" && {
+		JSC_HOME=`dirname $0`
+	}
+fi
+
+java -jar "$JSC_HOME/jsc.jar" $*
